@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rede_social
+    username: rede_social
+    password: rede_social
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    com.rede_social_api: DEBUG

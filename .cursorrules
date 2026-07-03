@@ -1,0 +1,137 @@
+# ==========================================
+# Domain Boundaries
+# ==========================================
+
+- NEVER access another domain's Repository directly.
+- A Service may only use Repositories that belong to its own domain.
+- Cross-domain communication MUST happen through the corresponding Service.
+- The only allowed exception is read-only access to UserRepository for public profile data (username, avatar, displayName).
+
+Examples:
+
+✔ MessageService -> NotificationService
+✔ FollowService -> UserRepository (public profile only)
+
+✘ MessageService -> NotificationRepository
+✘ PostService -> FollowRepository
+
+
+# ==========================================
+# Authorization
+# ==========================================
+
+- Every Repository query that returns data visible to another user MUST receive viewerId (or currentUserId) explicitly.
+- Visibility and ownership filtering MUST be enforced inside the SQL/JPA query.
+- NEVER filter permissions only inside the Service layer.
+
+Correct example:
+
+findVisiblePostsByAuthor(
+    UUID authorId,
+    UUID viewerId,
+    Instant cursor,
+    UUID cursorId,
+    int limit
+)
+
+Incorrect example:
+
+findPostsByAuthor(UUID authorId)
+
+
+# ==========================================
+# Ownership Validation
+# ==========================================
+
+- Every UPDATE or DELETE on user-owned resources MUST verify ownership in the database query itself.
+- NEVER perform ownership validation only before executing the update.
+
+Correct example:
+
+UPDATE posts
+SET content = :content
+WHERE id = :id
+AND author_id = :currentUserId
+
+Incorrect example:
+
+SELECT post
+IF owner
+UPDATE posts...
+
+
+# ==========================================
+# Counters
+# ==========================================
+
+- Persistent counters live ONLY in PostgreSQL.
+- Counters MUST be updated using atomic UPDATE statements.
+- Redis MUST NOT store persistent counters.
+
+Redis is allowed only for:
+
+- unread notifications
+- rate limiting
+- temporary cache
+- session-related data
+
+Redis MUST NOT store:
+
+- likeCount
+- followerCount
+- followingCount
+- commentCount
+
+
+# ==========================================
+# Cursor Pagination
+# ==========================================
+
+- Cursor pagination MUST always use a composite cursor.
+
+Cursor:
+
+(createdAt, id)
+
+Ordering:
+
+ORDER BY created_at DESC, id DESC
+
+NEVER paginate only by timestamp.
+
+
+# ==========================================
+# Testing
+# ==========================================
+
+- A feature is NOT considered complete without integration tests.
+- Integration tests MUST use Testcontainers.
+- Every protected endpoint MUST include at least one authorization isolation test.
+
+Minimum required scenarios:
+
+✔ owner access
+✔ unauthorized access
+✔ authenticated access from another user
+✔ resource not found
+
+
+# ==========================================
+# Repository Design
+# ==========================================
+
+- Repository methods MUST enforce visibility rules.
+- Repository methods MUST never return unauthorized entities.
+- Business rules remain in Services.
+- Ownership and visibility constraints belong to Repository queries.
+
+
+# ==========================================
+# Architecture
+# ==========================================
+
+- Services communicate only with Services.
+- Controllers communicate only with Services.
+- Repositories communicate only with the database.
+- Controllers MUST NEVER access Repositories directly.
+- Services MUST NEVER access Controllers.
