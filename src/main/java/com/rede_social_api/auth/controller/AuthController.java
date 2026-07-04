@@ -5,6 +5,8 @@ import com.rede_social_api.auth.dto.request.RefreshTokenRequest;
 import com.rede_social_api.auth.dto.request.RegisterRequest;
 import com.rede_social_api.auth.dto.response.AuthResponse;
 import com.rede_social_api.auth.service.AuthService;
+import com.rede_social_api.common.security.AuthenticatedUser;
+import com.rede_social_api.common.security.CurrentUser;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +39,11 @@ public class AuthController {
     @PostMapping("/refresh")
     public AuthResponse refresh(@Valid @RequestBody RefreshTokenRequest request) {
         return authService.refresh(request);
+    }
+
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout(@CurrentUser AuthenticatedUser user) {
+        authService.logout(user.getId());
     }
 }

@@ -1,0 +1,27 @@
+# Artefactos de compilação — nunca úteis como contexto
+target/
+*.class
+
+# Metadados de IDE — irrelevantes para geração de código
+.idea/
+.vscode/
+
+# Wrapper do Maven — binário, sem valor semântico
+.mvn/wrapper/maven-wrapper.jar
+
+# Controlo de versões
+.git/
+
+# Logs — volumosos e raramente relevantes para o raciocínio do agente
+*.log
+logs/
+
+# Relatórios de teste gerados — resultado, não código-fonte
+target/surefire-reports/
+target/failsafe-reports/
+
+# Segredos — nunca devem ser lidos pelo agente
+.env
+*.pem
+*.key
+application-secrets.yml

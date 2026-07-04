@@ -95,4 +95,8 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     @Modifying
     @Query("UPDATE Post p SET p.commentCount = p.commentCount + :delta WHERE p.id = :id")
     int incrementCommentCount(@Param("id") UUID id, @Param("delta") int delta);
+
+    @Modifying
+    @Query(value = "DELETE FROM likes WHERE target_type = 'POST' AND target_id = :id", nativeQuery = true)
+    int deleteLikesByPostId(@Param("id") UUID id);
 }

@@ -10,6 +10,14 @@ spring:
   jpa:
     show-sql: false
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
 app:
+  cors:
+    allowed-origins: http://allowed-origin.com
   jwt:
     secret: test-secret-key-with-at-least-256-bits-for-jwt-signing-ok

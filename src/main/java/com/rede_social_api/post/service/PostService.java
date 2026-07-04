@@ -69,6 +69,7 @@ public class PostService {
 
     @Transactional
     public void deletePost(UUID postId, UUID authorId) {
+        postRepository.deleteLikesByPostId(postId);
         int deleted = postRepository.deleteOwnedPost(postId, authorId);
         if (deleted == 0) {
             throw new ApiException(HttpStatus.NOT_FOUND, "POST_NOT_FOUND", "Post not found");

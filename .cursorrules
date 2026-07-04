@@ -135,3 +135,36 @@ Minimum required scenarios:
 - Repositories communicate only with the database.
 - Controllers MUST NEVER access Repositories directly.
 - Services MUST NEVER access Controllers.
+
+# ==========================================
+# Code Style
+# ==========================================
+
+- Use Lombok annotations (@Getter, @Setter, @Builder) instead of manual boilerplate.
+- Entity classes use @PrePersist/@PreUpdate for UUID generation and timestamps, never database defaults.
+- DTOs are Java records, never classes with mutable setters.
+- Never expose entity classes directly in Controller responses; always map to a Response DTO.
+
+# ==========================================
+# Database Migrations
+# ==========================================
+
+- Every schema change requires a new Flyway migration file: V{n}__description.sql.
+- NEVER modify an existing migration file after it has been committed.
+- ddl-auto is always "validate", never "update" or "create"
+
+# ==========================================
+# Circular Dependencies
+# ==========================================
+
+- Circular Service dependencies resolved via @Lazy are tolerated only when
+  refactoring into three separate Services would break domain isolation.
+- Before introducing @Lazy, evaluate whether the shared responsibility should
+  be extracted into a new, smaller Service.
+
+# ==========================================
+# Commits
+# ==========================================
+
+- Commit messages follow Conventional Commits: feat:, fix:, refactor:, test:, docs:.
+- Each commit corresponds to one phase or one correction item, never multiple unrelated changes.

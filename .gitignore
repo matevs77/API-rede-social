@@ -1,8 +1,36 @@
+# Maven
 target/
+*.class
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDEs
 .idea/
 *.iml
+*.ipr
+*.iws
+.vscode/
 .classpath
 .project
 .settings/
+bin/
+
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Segredos e configuração local
 .env
+.env.local
+application-local.yml
+application-secrets.yml
+*.pem
+*.key
+
+# Logs
 *.log
+logs/
+*.hprof
+
+# Docker (dados locais persistidos)
+docker-data/

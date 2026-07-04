@@ -39,6 +39,10 @@ public class JwtProvider {
         return accessTokenExpirationMs;
     }
 
+    public long getRefreshTokenExpirationMs() {
+        return refreshTokenExpirationMs;
+    }
+
     public UUID extractUserId(String token) {
         return UUID.fromString(parseClaims(token).getSubject());
     }

@@ -6,6 +6,19 @@ spring:
   jpa:
     show-sql: false
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+app:
+  cors:
+    allowed-origins: http://localhost:5173
+
 logging:
   level:
     com.rede_social_api: DEBUG

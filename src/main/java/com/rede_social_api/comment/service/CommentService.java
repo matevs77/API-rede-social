@@ -81,6 +81,7 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(UUID commentId, UUID authorId) {
+        commentRepository.deleteLikesByCommentId(commentId);
         Comment comment = commentRepository.findById(commentId).orElse(null);
         int deleted = commentRepository.deleteOwnedComment(commentId, authorId);
         if (deleted == 0) {
