@@ -13,7 +13,6 @@ import com.rede_social_api.notification.service.NotificationService;
 import com.rede_social_api.user.dto.response.UserSummary;
 import com.rede_social_api.user.entity.User;
 import com.rede_social_api.user.repository.UserRepository;
-import com.rede_social_api.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,19 +27,16 @@ public class FollowService {
 
     private final FollowRepository followRepository;
     private final UserRepository userRepository;
-    private final UserService userService;
     private final NotificationService notificationService;
     private final CursorCodec cursorCodec;
 
     public FollowService(
             FollowRepository followRepository,
             UserRepository userRepository,
-            UserService userService,
             NotificationService notificationService,
             CursorCodec cursorCodec) {
         this.followRepository = followRepository;
         this.userRepository = userRepository;
-        this.userService = userService;
         this.notificationService = notificationService;
         this.cursorCodec = cursorCodec;
     }

@@ -2,7 +2,6 @@ package com.rede_social_api.notification.service;
 
 import com.rede_social_api.common.pagination.CompositeCursor;
 import com.rede_social_api.common.pagination.CursorCodec;
-import com.rede_social_api.notification.dto.response.NotificationListResponse;
 import com.rede_social_api.notification.dto.response.NotificationResponse;
 import com.rede_social_api.user.dto.response.UserSummary;
 import com.rede_social_api.notification.entity.Notification;

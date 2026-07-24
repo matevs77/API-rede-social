@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/rede_social
+    url: jdbc:postgresql://localhost:5433/rede_social
     username: rede_social
     password: rede_social
   jpa:

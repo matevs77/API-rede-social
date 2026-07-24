@@ -4,15 +4,20 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+@SuppressWarnings("resource")
 final class PostgresRedisContainers {
 
-    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16-alpine"))
-            .withDatabaseName("rede_social")
-            .withUsername("rede_social")
-            .withPassword("rede_social");
+    private static final PostgreSQLContainer<?> POSTGRES;
+    private static final GenericContainer<?> REDIS;
 
-    private static final GenericContainer<?> REDIS = new GenericContainer<>(DockerImageName.parse("redis:7-alpine"))
-            .withExposedPorts(6379);
+    static {
+        POSTGRES = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16-alpine"))
+                .withDatabaseName("rede_social")
+                .withUsername("rede_social")
+                .withPassword("rede_social");
+        REDIS = new GenericContainer<>(DockerImageName.parse("redis:7-alpine"))
+                .withExposedPorts(6379);
+    }
 
     private static boolean started;
 

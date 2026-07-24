@@ -2,7 +2,6 @@ package com.rede_social_api.like.service;
 
 import com.rede_social_api.comment.repository.CommentRepository;
 import com.rede_social_api.comment.service.CommentService;
-import com.rede_social_api.common.exception.ApiException;
 import com.rede_social_api.like.dto.response.LikeToggleResponse;
 import com.rede_social_api.like.entity.Like;
 import com.rede_social_api.like.entity.LikeTargetType;
@@ -12,7 +11,6 @@ import com.rede_social_api.notification.service.NotificationService;
 import com.rede_social_api.post.repository.PostRepository;
 import com.rede_social_api.post.service.PostService;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
